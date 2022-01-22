@@ -1,3 +1,4 @@
+package problems;
 import java.util.*;
 
 public class P1475B {
