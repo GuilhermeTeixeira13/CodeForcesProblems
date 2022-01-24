@@ -13,6 +13,7 @@ public class UnusualMinesweeper {
     public static void main(String[] args) throws IOException{
         String[] T_String = ReadLine();
         int t = Integer.parseInt(T_String[0]);
+        ArrayList<Integer> solution = new ArrayList<Integer>();
 
         for(int testCase = 0; testCase<t; testCase++){
             System.out.println("");
@@ -37,24 +38,50 @@ public class UnusualMinesweeper {
 
             Board board = new Board(k);
             board.setMines(mines);
-
             board.buildBoard();
+
+            int timeUntilAllExplodes=0;
+            Mine mineChoosedToExplode = new Mine();
+            ArrayList<Mine> minesThatWillExplodeNEXT = new ArrayList<Mine>();
+            ArrayList<Mine> minesThatWillExplodeAroundTheChoice = new ArrayList<Mine>();
+
+            while(board.verifyIfAllMinesExploded() == false){
+                minesThatWillExplodeNEXT = board.explodeMinesWithTime(timeUntilAllExplodes);
+                
+                mineChoosedToExplode = board.chooseMineToExplode();
+                minesThatWillExplodeAroundTheChoice = board.explodeMinesAround(mineChoosedToExplode);
+
+                minesThatWillExplodeNEXT.addAll(minesThatWillExplodeAroundTheChoice);
+
+                while(!minesThatWillExplodeNEXT.isEmpty()){
+                    
+                }
+
+                timeUntilAllExplodes++;
+            }
+
+            solution.add(timeUntilAllExplodes);
         }
+
+        System.out.println(solution);
     }
 }
 
 class Mine {
     Point location = new Point();
     private int TimeUntilExplosion;
+    private boolean exploded;
 
     public Mine(){
         Point location = new Point();
         this.TimeUntilExplosion = TimeUntilExplosion;
+        this.exploded = false;
     }
 
     public Mine(int TimeUntilExplosion){
         Point location = new Point();
         this.TimeUntilExplosion = TimeUntilExplosion;
+        this.exploded = false;
     }
 
     public double getLocationX(){
@@ -66,10 +93,20 @@ class Mine {
     public int getTimeUntilExplosion(){
         return TimeUntilExplosion;
     }
+    public void setTimeUntilExplosion(int time){
+        this.TimeUntilExplosion = time;
+    }
 
     public void setLocation(int x, int y){
         this.location.x = x;
         this.location.y = y;
+    }
+
+    public void setExploded(boolean state){
+        this.exploded = state;
+    }
+    public boolean getStateOfMine(){
+        return this.exploded;
     }
 }
 
@@ -84,6 +121,17 @@ class Board {
 
     public void setMines(ArrayList<Mine> mines){
         this.mines = (ArrayList<Mine>) mines.clone();
+    }
+
+    public int getHigherCordinate(){
+        double higherCordinate = 0;
+        for(int i = 0; i < this.mines.size() ; i++){
+            if(mines.get(i).getLocationX() > higherCordinate)
+                higherCordinate = mines.get(i).getLocationX();
+            if(mines.get(i).getLocationY() > higherCordinate)
+                higherCordinate = mines.get(i).getLocationY();
+        }
+        return (int) higherCordinate;
     }
 
     public int calculateBoardSize(){
@@ -107,14 +155,10 @@ class Board {
         transactionX = (int)mineFarAwayX.getLocationX()*-1;
         transactionY = (int)mineFarAwayY.getLocationY()*-1;
 
-        for(int i = 0; i < this.mines.size() ; i++){
+        for(int i = 0; i < this.mines.size() ; i++)
             mines.get(i).setLocation((int)mines.get(i).getLocationX()+transactionX, (int)mines.get(i).getLocationY()+transactionY);
-
-            if(mines.get(i).getLocationX() > higherCordinate)
-                higherCordinate = mines.get(i).getLocationX();
-            if(mines.get(i).getLocationY() > higherCordinate)
-            higherCordinate = mines.get(i).getLocationY();
-        }
+        
+        higherCordinate = getHigherCordinate();
 
         return (int)higherCordinate;
     }
@@ -145,5 +189,90 @@ class Board {
         }
 
         printBoard(higherCordinate, board);
+    }
+
+    public Mine chooseMineToExplode(){
+        int higherTimeToExplode = 0;
+        Mine mineToExplode = new Mine();
+        for(int i=0; i<this.mines.size(); i++){   
+            if(this.mines.get(i).getTimeUntilExplosion() > higherTimeToExplode){
+                higherTimeToExplode = this.mines.get(i).getTimeUntilExplosion();
+                mineToExplode = this.mines.get(i);
+                this.mines.get(i).setExploded(true);
+                this.mines.get(i).setTimeUntilExplosion(-1);
+            }
+        }
+        return mineToExplode;
+    }
+
+    public boolean verifyIfAllMinesExploded(){
+        int countExplosions=0; 
+        for(int i=0; i<this.mines.size(); i++){
+            if(this.mines.get(i).getStateOfMine() == true)
+                countExplosions += 1;
+        }
+        if(this.mines.size() == countExplosions)
+            return true;
+        else
+            return false;
+    }
+
+    public ArrayList<Mine> explodeMinesAround(Mine mainMine){
+        int mainMineX = (int)mainMine.getLocationX();
+        int mainMineY = (int)mainMine.getLocationY();
+        int x1, x2, y1, y2;
+
+        ArrayList<Mine> SelectedCases = new ArrayList<Mine>();
+        ArrayList<Mine> MinesThatWillAutomaticlyExplode = new ArrayList<Mine>();
+
+        for(int i = 1; i <= this.k; i++){
+            x1 = mainMineX + i; 
+            Mine mine1 = new Mine();
+            mine1.setLocation(x1, mainMineY);
+            SelectedCases.add(mine1);
+
+            y1 = mainMineY + i; 
+            Mine mine2 = new Mine();
+            mine2.setLocation(mainMineX, y1);
+            SelectedCases.add(mine2);
+
+            x2 = mainMineX - i; 
+            if(x2 < 0)
+                x2 = 0;
+            Mine mine3 = new Mine();
+            mine3.setLocation(x2, mainMineY);
+            SelectedCases.add(mine3);
+
+            y2 = mainMineY - i; 
+            if(y2 < 0)
+                y2 = 0;
+            Mine mine4 = new Mine();
+            mine4.setLocation(mainMineX, y2);
+            SelectedCases.add(mine4);
+        }
+
+        for(int j = 0; j < SelectedCases.size(); j++){
+            for(int k = 0; k < this.mines.size(); k++){
+                if( (SelectedCases.get(j).getLocationX() == this.mines.get(k).getLocationX())  &&  (SelectedCases.get(j).getLocationY() == this.mines.get(k).getLocationY())){
+                    this.mines.get(k).setExploded(true);
+                    this.mines.get(k).setTimeUntilExplosion(-1);
+                    MinesThatWillAutomaticlyExplode.add(this.mines.get(k));
+                }
+            }
+        }
+
+        return MinesThatWillAutomaticlyExplode;
+    }
+
+    public ArrayList<Mine> explodeMinesWithTime(int timeUntilExplosion){
+        ArrayList<Mine> minesThatWillExplode = new ArrayList<Mine>();
+        for(int k = 0; k < this.mines.size(); k++){
+            if(this.mines.get(k).getTimeUntilExplosion() == timeUntilExplosion && this.mines.get(k).getTimeUntilExplosion() != -1){
+                this.mines.get(k).setExploded(true);
+                this.mines.get(k).setTimeUntilExplosion(-1);
+                minesThatWillExplode.add(this.mines.get(k));
+            }
+        }  
+        return minesThatWillExplode;
     }
 }
