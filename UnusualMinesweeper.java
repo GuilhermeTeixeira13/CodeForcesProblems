@@ -223,7 +223,7 @@ class Board {
     }
     public void buildBoard(){
         int higherCordinate = calculateBoardSize();;
-        int[][] board = new int[higherCordinate+3][higherCordinate+3];
+        int[][] board = new int[higherCordinate+4][higherCordinate+4];
         for(int y=0; y<higherCordinate+3; y++){
             for(int x=0; x<higherCordinate+3; x++){
                 board[y][x] = 0;
