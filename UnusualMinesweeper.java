@@ -130,7 +130,7 @@ class Mine {
     private boolean exploded;
     public Mine(){
         Point location = new Point();
-        this.TimeUntilExplosion = 0;
+        this.TimeUntilExplosion = -2;
         this.exploded = false;
     }
     public Mine(int TimeUntilExplosion){
@@ -235,10 +235,10 @@ class Board {
         //printBoard(higherCordinate, board);
     }
     public Mine chooseMineToExplode(){
-        int higherTimeToExplode = -1;
+        int higherTimeToExplode = 0;
         Mine mineToExplode = new Mine();
         for(int i=0; i<this.mines.size(); i++){   
-            if(this.mines.get(i).getTimeUntilExplosion() > higherTimeToExplode && this.mines.get(i).getStateOfMine() == false){
+            if(this.mines.get(i).getTimeUntilExplosion() >= higherTimeToExplode && this.mines.get(i).getStateOfMine() == false){
                 higherTimeToExplode = this.mines.get(i).getTimeUntilExplosion();
                 mineToExplode = this.mines.get(i);
             }
@@ -300,7 +300,7 @@ class Board {
     public ArrayList<Mine> explodeMinesWithTime(int timeUntilExplosion){
         ArrayList<Mine> minesThatWillExplode = new ArrayList<Mine>();
         for(int k = 0; k < this.mines.size(); k++){
-            if(this.mines.get(k).getTimeUntilExplosion() == timeUntilExplosion && timeUntilExplosion != 0){
+            if(this.mines.get(k).getTimeUntilExplosion() == timeUntilExplosion){
                 this.mines.get(k).setExploded(true);
                 this.mines.get(k).setTimeUntilExplosion(-1);
                 minesThatWillExplode.add(this.mines.get(k));
