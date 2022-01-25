@@ -1,7 +1,7 @@
-/*import java.io.IOException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Point;
-import java.util.*;*/
+import java.util.*;
 
 public class UnusualMinesweeper {
     public static String[] ReadLine() throws IOException{
