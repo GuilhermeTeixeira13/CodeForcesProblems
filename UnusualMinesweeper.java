@@ -116,6 +116,7 @@ public class UnusualMinesweeper {
                         minesThatWillExplodeNEXT.addAll(board.explodeMinesAround(minesThatWillExplodeNEXTCopy.get(l)));
                     }
                 };
+                board.updateMinesTimeUntilExplosion();
             }
             solution.add(timeUntilAllExplodes);
         }
@@ -307,5 +308,11 @@ class Board {
             }
         }  
         return minesThatWillExplode;
+    }
+
+    public void updateMinesTimeUntilExplosion(){
+        for(int k = 0; k < this.mines.size(); k++){
+            this.mines.get(k).setTimeUntilExplosion(this.mines.get(k).getTimeUntilExplosion()-1);
+        }
     }
 }
