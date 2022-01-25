@@ -235,10 +235,10 @@ class Board {
         //printBoard(higherCordinate, board);
     }
     public Mine chooseMineToExplode(){
-        int higherTimeToExplode = 0;
+        int higherTimeToExplode = -1;
         Mine mineToExplode = new Mine();
         for(int i=0; i<this.mines.size(); i++){   
-            if(this.mines.get(i).getTimeUntilExplosion() >= higherTimeToExplode && this.mines.get(i).getStateOfMine() == false){
+            if(this.mines.get(i).getTimeUntilExplosion() > higherTimeToExplode && this.mines.get(i).getStateOfMine() == false){
                 higherTimeToExplode = this.mines.get(i).getTimeUntilExplosion();
                 mineToExplode = this.mines.get(i);
             }
