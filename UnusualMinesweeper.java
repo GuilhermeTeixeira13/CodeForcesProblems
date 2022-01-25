@@ -232,7 +232,7 @@ class Board {
         for(int i = 0; i<this.mines.size(); i++){
             board[(int)this.mines.get(i).getLocationY()][(int)this.mines.get(i).getLocationX()] = this.mines.get(i).getTimeUntilExplosion();
         }
-        printBoard(higherCordinate, board);
+        //printBoard(higherCordinate, board);
     }
     public Mine chooseMineToExplode(){
         int higherTimeToExplode = 0;
