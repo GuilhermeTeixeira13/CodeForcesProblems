@@ -38,6 +38,7 @@ public class UnusualMinesweeper {
 
             Board board = new Board(k);
             board.setMines(mines);
+            board.buildBoard();
 
             int timeUntilAllExplodes=-1;
             Mine mineChoosedToExplode = new Mine();
@@ -63,11 +64,11 @@ public class UnusualMinesweeper {
                 };
             }
 
-
             solution.add(timeUntilAllExplodes);
         }
 
-        System.out.println(solution);
+        for(int o = 0; o < solution.size(); o++)
+            System.out.println(solution.get(o));
     }
 }
 
@@ -115,7 +116,7 @@ class Mine {
 
     public String toString(){
         String s;
-        s = "Location:"+this.location+"TE:"+this.TimeUntilExplosion;
+        s = "Location:"+this.location;
         return s;
     }
 }
@@ -198,7 +199,7 @@ class Board {
             board[(int)this.mines.get(i).getLocationY()][(int)this.mines.get(i).getLocationX()] = this.mines.get(i).getTimeUntilExplosion();
         }
 
-        printBoard(higherCordinate, board);
+        //printBoard(higherCordinate, board);
     }
 
     public Mine chooseMineToExplode(){
