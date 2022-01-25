@@ -1,14 +1,14 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.awt.Point;
+import java.util.*;
 
 public class UnusualMinesweeper {
     public static String[] ReadLine() throws IOException{
-        BufferedReader Reader = new BufferedReader(new InputStreamReader(System.in));
-        String[] Strings = Reader.readLine().split(" ");
-        return Strings;
+        Scanner scaninput = new Scanner(System.in);
+        String inputSentence = scaninput.nextLine();
+        String[] result=inputSentence.split(" ");
+        return result;
     }
     public static void main(String[] args) throws IOException{
         String[] T_String = ReadLine();
