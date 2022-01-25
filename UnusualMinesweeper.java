@@ -238,7 +238,7 @@ class Board {
         int higherTimeToExplode = 0;
         Mine mineToExplode = new Mine();
         for(int i=0; i<this.mines.size(); i++){   
-            if(this.mines.get(i).getTimeUntilExplosion() > higherTimeToExplode && this.mines.get(i).getStateOfMine() == false){
+            if(this.mines.get(i).getTimeUntilExplosion() >= higherTimeToExplode && this.mines.get(i).getStateOfMine() == false){
                 higherTimeToExplode = this.mines.get(i).getTimeUntilExplosion();
                 mineToExplode = this.mines.get(i);
             }
