@@ -1,9 +1,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Point;
-import java.util.*;
-import java.lang.Object;
-import java.io.Reader;    
+import java.util.*;   
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
