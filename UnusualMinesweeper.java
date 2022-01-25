@@ -2,34 +2,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Point;
 import java.util.*;
+import java.lang.Object;
+import java.io.Reader;    
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class UnusualMinesweeper {
-    public static String[] ReadLine() throws IOException{
-        Scanner scaninput = new Scanner(System.in);
-        String inputSentence = scaninput.nextLine();
-        String[] result=inputSentence.split(" ");
-        return result;
-    }
     public static void main(String[] args) throws IOException{
-        String[] T_String = ReadLine();
-        int t = Integer.parseInt(T_String[0]);
-        ArrayList<Integer> solution = new ArrayList<Integer>();
+        Reader in = new Reader();
 
+        int t = in.nextInt();
+        ArrayList<Integer> solution = new ArrayList<Integer>();
         for(int testCase = 0; testCase<t; testCase++){
             System.out.println("");
-            String[] N_K_String = ReadLine();
 
-            int n = Integer.parseInt(N_K_String[0]);
-            int k = Integer.parseInt(N_K_String[1]);
+            int n = in.nextInt();
+            int k = in.nextInt();
 
             ArrayList<Mine> mines = new ArrayList<Mine>();
 
             for(int mineCount = 0; mineCount < n; mineCount++){
-                String[] X_Y_TimeUntilExplosion_String = ReadLine();
-
-                int TimeUntilExplosion = Integer.parseInt(X_Y_TimeUntilExplosion_String[2]);
-                int LocationX = Integer.parseInt(X_Y_TimeUntilExplosion_String[0]);
-                int LocationY = Integer.parseInt(X_Y_TimeUntilExplosion_String[1]);
+                int TimeUntilExplosion = in.nextInt();
+                int LocationX = in.nextInt();
+                int LocationY = in.nextInt();
 
                 Mine mine = new Mine(TimeUntilExplosion);
                 mine.setLocation(LocationX, LocationY);
@@ -69,6 +64,30 @@ public class UnusualMinesweeper {
 
         for(int o = 0; o < solution.size(); o++)
             System.out.println(solution.get(o));
+    }
+    static class Reader {
+        BufferedReader in;
+        StringTokenizer st;
+        public Reader() {
+            in = new BufferedReader(new InputStreamReader(System.in));
+            st = new StringTokenizer("");
+        }
+        public String nextLine() throws IOException {
+            st = new StringTokenizer("");
+            return in.readLine();
+        }
+        public String next() throws IOException {
+            while (!st.hasMoreTokens()) {
+                st = new StringTokenizer(in.readLine());
+            }
+            return st.nextToken();
+        }
+        public int nextInt() throws IOException {
+            return Integer.parseInt(next());
+        }
+        public long nextLong() throws IOException {
+            return Long.parseLong(next());
+        }
     }
 }
 
