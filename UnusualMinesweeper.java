@@ -2,6 +2,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Point;
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.io.InputStreamReader;
+import java.io.BufferedOutputStream;
 
 public class UnusualMinesweeper {
     public static String[] ReadLine() throws IOException{
@@ -10,25 +14,84 @@ public class UnusualMinesweeper {
         String[] result=inputSentence.split(" ");
         return result;
     }
-    public static void main(String[] args) throws IOException{
-        String[] T_String = ReadLine();
-        int t = Integer.parseInt(T_String[0]);
+    public static FastReader sc;
+    public static PrintWriter out;
+    static class FastReader
+    {
+        BufferedReader br;
+        StringTokenizer str;
+ 
+        public FastReader()
+        {
+            br = new BufferedReader(new
+                    InputStreamReader(System.in));
+        }
+ 
+        String next()
+        {
+            while (str == null || !str.hasMoreElements())
+            {
+                try
+                {
+                    str = new StringTokenizer(br.readLine());
+                }
+                catch (IOException  end)
+                {
+                    end.printStackTrace();
+                }
+            }
+            return str.nextToken();
+        }
+ 
+        int nextInt()
+        {
+            return Integer.parseInt(next());
+        }
+ 
+        long nextLong()
+        {
+            return Long.parseLong(next());
+        }
+ 
+        double nextDouble()
+        {
+            return Double.parseDouble(next());
+        }
+ 
+        String nextLine()
+        {
+            String str = "";
+            try
+            {
+                str = br.readLine();
+            }
+            catch (IOException end)
+            {
+                end.printStackTrace();
+            }
+            return str;
+        }
+    }
+    public static void main(String[] args) throws java.lang.Exception{
+        out = new PrintWriter(new BufferedOutputStream(System.out));
+        sc = new FastReader();
+        int t = sc.nextInt();
+
         ArrayList<Integer> solution = new ArrayList<Integer>();
         for(int testCase = 0; testCase<t; testCase++){
             System.out.println("");
-            String[] N_K_String = ReadLine();
-            int n = Integer.parseInt(N_K_String[0]);
-            int k = Integer.parseInt(N_K_String[1]);
+            int n = sc.nextInt();
+            int k = sc.nextInt();
             ArrayList<Mine> mines = new ArrayList<Mine>();
             for(int mineCount = 0; mineCount < n; mineCount++){
-                String[] X_Y_TimeUntilExplosion_String = ReadLine();
-                int TimeUntilExplosion = Integer.parseInt(X_Y_TimeUntilExplosion_String[2]);
-                int LocationX = Integer.parseInt(X_Y_TimeUntilExplosion_String[0]);
-                int LocationY = Integer.parseInt(X_Y_TimeUntilExplosion_String[1]);
+                int LocationX = sc.nextInt();
+                int LocationY = sc.nextInt();
+                int TimeUntilExplosion = sc.nextInt();
                 Mine mine = new Mine(TimeUntilExplosion);
                 mine.setLocation(LocationX, LocationY);
                 mines.add(mine);
             }
+            //System.out.println(mines+"\nn="+n+"  k="+k);
             Board board = new Board(k);
             board.setMines(mines);
             board.buildBoard();
@@ -58,6 +121,7 @@ public class UnusualMinesweeper {
         }
         for(int o = 0; o < solution.size(); o++)
             System.out.println(solution.get(o));
+        out.close();
     }
 }
 class Mine {
@@ -168,7 +232,7 @@ class Board {
         for(int i = 0; i<this.mines.size(); i++){
             board[(int)this.mines.get(i).getLocationY()][(int)this.mines.get(i).getLocationX()] = this.mines.get(i).getTimeUntilExplosion();
         }
-        //printBoard(higherCordinate, board);
+        printBoard(higherCordinate, board);
     }
     public Mine chooseMineToExplode(){
         int higherTimeToExplode = 0;
