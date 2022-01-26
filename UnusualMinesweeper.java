@@ -8,12 +8,6 @@ import java.io.InputStreamReader;
 import java.io.BufferedOutputStream;
 
 public class UnusualMinesweeper {
-    public static String[] ReadLine() throws IOException{
-        Scanner scaninput = new Scanner(System.in);
-        String inputSentence = scaninput.nextLine();
-        String[] result=inputSentence.split(" ");
-        return result;
-    }
     public static FastReader sc;
     public static PrintWriter out;
     static class FastReader
