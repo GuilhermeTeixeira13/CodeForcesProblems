@@ -84,7 +84,9 @@ public class P671B {
         }
         else{
             for(int j = 0; j < daysLeft; j++){
-                if(Collections.frequency(bank, bank.get(0)) != citizens){
+                if(Collections.frequency(bank, bank.get(0)) == citizens)
+                    break;   
+                else{
                     Collections.sort(bank);
                     richestCoins = bank.get(citizens-1);
                     bank.set(citizens-1, bank.get(citizens-1)-1);
