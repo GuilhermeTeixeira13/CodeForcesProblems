@@ -84,11 +84,13 @@ public class P671B {
         }
         else{
             for(int j = 0; j < daysLeft; j++){
-                Collections.sort(bank);
-                richestCoins = bank.get(citizens-1);
-                bank.set(citizens-1, bank.get(citizens-1)-1);
-                Collections.sort(bank);
-                bank.set(0, bank.get(0)+1);
+                if(Collections.frequency(bank, bank.get(0)) != citizens){
+                    Collections.sort(bank);
+                    richestCoins = bank.get(citizens-1);
+                    bank.set(citizens-1, bank.get(citizens-1)-1);
+                    Collections.sort(bank);
+                    bank.set(0, bank.get(0)+1);
+                }
             }
             Collections.sort(bank);
             richestCoins = bank.get(citizens-1);
