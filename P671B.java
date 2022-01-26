@@ -71,26 +71,30 @@ public class P671B {
         int citizens = sc.nextInt();
         int daysLeft = sc.nextInt();
         ArrayList<Integer> bank = new ArrayList<Integer>();
-        int solution = 0;
+        int solution = 0, richestCoins, poorestCoins;
+
         for(int i = 0; i < citizens; i++)
             bank.add(sc.nextInt());
-        
-        Collections.sort(bank);
-        int richestCoins = bank.get(citizens-1);
-        int poorestCoins = bank.get(0);
-     
-        for(int j = 0; j < daysLeft; j++){
+    
+        if(daysLeft == 0){
             Collections.sort(bank);
             richestCoins = bank.get(citizens-1);
-            bank.set(citizens-1, bank.get(citizens-1)-1);
-            Collections.sort(bank);
-            bank.set(0, bank.get(0)+1);
+            poorestCoins = bank.get(0);
+            solution = richestCoins - poorestCoins;
         }
-        Collections.sort(bank);
-        richestCoins = bank.get(citizens-1);
-        poorestCoins = bank.get(0);
-        solution = richestCoins - poorestCoins;
-        
+        else{
+            for(int j = 0; j < daysLeft; j++){
+                Collections.sort(bank);
+                richestCoins = bank.get(citizens-1);
+                bank.set(citizens-1, bank.get(citizens-1)-1);
+                Collections.sort(bank);
+                bank.set(0, bank.get(0)+1);
+            }
+            Collections.sort(bank);
+            richestCoins = bank.get(citizens-1);
+            poorestCoins = bank.get(0);
+            solution = richestCoins - poorestCoins;
+        }
         System.out.println(solution);
     }
 }
