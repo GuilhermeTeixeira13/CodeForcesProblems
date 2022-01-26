@@ -79,6 +79,8 @@ public class P671B {
         int poorestCoins = bank.get(0);
         int posOfThePoorest = 0;
         for(int j = 0; j < daysLeft; j++){
+            richestCoins = bank.get(0);
+            poorestCoins = bank.get(0);
             for(int i = 0; i < citizens; i++){
                 if(bank.get(i)>richestCoins){
                     richestCoins = bank.get(i);
@@ -89,8 +91,12 @@ public class P671B {
                     posOfThePoorest = i;
                 }
             }
+            /*System.out.println("Banco: "+bank);
+            System.out.println("Coins do mais rico: "+richestCoins+", Pos do mais rico: "+posOfTheRichest);
+            System.out.println("Coins do mais pobre: "+poorestCoins+", Pos do mais pobre: "+posOfThePoorest);*/
             bank.set(posOfTheRichest, bank.get(posOfTheRichest)-1);
             bank.set(posOfThePoorest, bank.get(posOfThePoorest)+1);
+            //System.out.println("Banco: "+bank);
         }
 
         richestCoins = bank.get(0);
@@ -102,5 +108,6 @@ public class P671B {
                 poorestCoins = bank.get(i);
         }
         System.out.println(richestCoins-poorestCoins);
+
     }
 }
