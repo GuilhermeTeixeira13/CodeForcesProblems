@@ -69,11 +69,29 @@ public class P1263D {
     	int n = in.nextInt();
         ArrayList<String> palavras = new ArrayList<String>();
         in.nextLine(); 
-    	for (int i = 0; i < n; i++) {
+    	for (int i = 0; i < n; i++){
         	palavras.add(in.nextLine());
     	}
 
-        System.out.println(equivalentes(palavras.get(0), palavras));
+        //System.out.println(equivalentes(palavras.get(3), palavras));
+
+        int i = 0;
+        ArrayList<String> solution = new ArrayList<String>();
+        while(palavras.isEmpty() == false){
+            //System.out.println("i="+i);
+            //System.out.println(palavras);
+            solution = equivalentes(palavras.get(0), palavras);
+            //System.out.println(solution);
+            for(int j=0; j<solution.size();j++){
+                if(palavras.contains(solution.get(j))){    
+                    palavras.remove(solution.get(j));
+                }
+            }
+            //System.out.println(palavras);
+            i++;
+        }
+
+        System.out.println(i);
     }
 
     public static Boolean equivalentesR1(String a, String b){
@@ -109,13 +127,15 @@ public class P1263D {
         for(int i=0; i<arr.size(); i++){
             for(int j=0; j<a.length(); j++){
                 if(arr.get(i).indexOf(a.charAt(j)) != -1){
-                    equivalentesStringA.add(arr.get(i));
+                    if(!equivalentesStringA.contains(arr.get(i)))
+                        equivalentesStringA.add(arr.get(i));
                     break;
                 }
             }
             for(int j=0; j<arr.size(); j++){
-                if((equivalentesR2(a, arr.get(j), arr) == true && equivalentesR2(arr.get(i), arr.get(j), arr) ==  true) && i != j){
-                    equivalentesStringA.add(arr.get(i));
+                if((equivalentesR2(a, arr.get(j), arr) == true && equivalentesR2(arr.get(i), arr.get(j), arr) ==  true) && i != j && equivalentesR1(a, arr.get(i)) == false){
+                    if(!equivalentesStringA.contains(arr.get(i)));
+                        equivalentesStringA.add(arr.get(i));
                     break;
                 }
             }
