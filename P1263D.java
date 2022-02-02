@@ -73,21 +73,15 @@ public class P1263D {
         	palavras.add(in.nextLine());
     	}
 
-        //System.out.println(equivalentes(palavras.get(3), palavras));
-
         int i = 0;
         ArrayList<String> solution = new ArrayList<String>();
         while(palavras.isEmpty() == false){
-            //System.out.println("i="+i);
-            //System.out.println(palavras);
             solution = equivalentes(palavras.get(0), palavras);
-            //System.out.println(solution);
             for(int j=0; j<solution.size();j++){
                 if(palavras.contains(solution.get(j))){    
                     palavras.remove(solution.get(j));
                 }
             }
-            //System.out.println(palavras);
             i++;
         }
 
